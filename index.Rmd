@@ -11,4 +11,17 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to Chinatown-preferably Boston's Chinatown but am also open to doing research into one based in another city. I would also be interested in doing research in a suburban Asian enclave in the greater Los Angeles area of Southern California.
+I am interested in exploring data related to Chinatown-preferably Boston's Chinatown but am also open to doing research into one based in another city. I would also be interested in doing research on a suburban Asian enclave in the greater Los Angeles area of Southern California.
+
+```{r}
+library(tidyverse)
+#data <- read.csv("Data.gov/main file/Housing Affordability Data System")
+```
+
+## Project Proposal
+** issues loading data
+
+My research question would be related to the connection between housing affordability in Boston's Chinatown and looking at a certain factor (that I will hopefully determine after a deeper analysis of my topic) to see its relationship to housing prices in Boston's Chinatown. 
+I am unsure of how to load my exact dataset into R Markdown, but this is the link: https://catalog.data.gov/dataset/housing-affordability-data-system-hads
+It is the Housing Affordability Data System which categorizes housing units by affordability and households by income to allow analysts to observe affordability measures. I will filter the data to the specific area of Boston I want to look at. I want to use this data to more closely investigate the impact of gentrification and the driving factors of rising housing prices in Chinatown. 
+I hypothesize that there will be some correlation between the timelines of the construction of infrastructure like the Tufts Medical Center and decrease in housing affordability in Chinatown. 
