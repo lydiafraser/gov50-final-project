@@ -18,17 +18,35 @@ knitr::opts_chunk$set(error = TRUE)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-housing <- read_csv("housing_data.csv")
+library(broom)
 ```
 
 ## Project Proposal
-My research question would be related to the connection between housing affordability in Boston's Chinatown and looking at a certain factor (that I will hopefully determine after a deeper analysis of my topic) to see its relationship to housing prices in Boston's Chinatown. 
-It is the Housing Affordability Data System which categorizes housing units by affordability and households by income to allow analysts to observe affordability measures. I will filter the data to the specific area of Boston I want to look at. I want to use this data to more closely investigate the impact of gentrification and the driving factors of rising housing prices in Chinatown. 
-I hypothesize that there will be some correlation between the timelines of the construction of infrastructure like the Tufts Medical Center and decrease in housing affordability in Chinatown. 
+My research question is analyzing Asian voting behavior by looking at a specific suburban enclave in Los Angeles. I want to analyze the relationship between being Asian and voting based on descriptive representation versus partisan representation. Despite being a typically blue demographic, there have been several elections in which a Republican Asian candidate has won. My question is ultimately what the demographic shifts in the San Gabriel Valley from the last round of redistricting can reveal about Asian voting behavior through the most recent elections in 2022. My hypothesis is that Asians voters generally value descriptive representation over partisan representation when these identities come into conflict. I will do this by comparing census and election data from 2020 and 2022 from California District 38 (before and after redistricting and East San Gabriel Valley, a predominantly Asian area, was redistricted to CA-38). My variables of interest are votes cast for a given candidate in a particular election (either congressional or presidential). I will do multiple regressions to visualize and compare these votes. 
 
 ## Milestone 3
-** I have loaded my data, but I am having issues figuring out how to reformat the data so that there are more than one column (right now, all of the columns are combined into one). I will seek help to resolve this issue, and once it is resolved, my data visualization should have no issues. 
+```{r}
+votes <- read_csv("tract.csv")
+
+cngdem22 <- votes |>
+  filter(cd_2020 == "38")
+  lm(CNGDEM01_22 ~ pop, data = cngdem22)
+cngdem22
+
+cngdem22_plot <- ggplot(cngdem22, mapping = aes(x = pop, y = CNGDEM01_22)) + geom_point() + geom_smooth(method = "lm") + scale_y_continuous(limits = c(0, 2500)) + labs(x = "Population", y = "Number of Votes", title = "2022 Congressional Votes for Linda Sánchez Regression")
+cngdem22_plot
+```
+
+```{r}
+cngdem1820 <- votes |>
+  filter(cd_2010 == "38")
+lm(CNGDEM01_18 ~ pop, data = cngdem1820)
+lm(CNGDEM01_20 ~ pop, data = cngdem1820)
+cngdem1820
+
+cngdem1820_plot <- ggplot(cngdem1820, mapping = aes(x = pop)) + geom_point(aes(y = CNGDEM01_18, color = "2018")) + geom_smooth(aes(y = CNGDEM01_18), method = "lm", color = "blue") + geom_point(aes(y = CNGDEM01_20, color = "2020")) + geom_smooth(aes(y = CNGDEM01_20), method = "lm", color = "red")  + labs(x = "Population", y = "Number of Votes", title = "2018 vs. 2020 Congressional Votes for Linda Sánchez Regression") + scale_color_manual(name = "CNG Election", values = c("2018" = "blue", "2020" = "red"), labels = c("2018", "2020"))
+cngdem1820_plot
+```
 
 
-burden_plot <- ggplot(housing, mapping = aes(x = burden)) + geom_bar()
-burden_plot
+The two plots are meant to demonstrate/confirm my preliminary observations about Asian voting behavior. The first graph visualizes a linear regression for votes for Linda Sánchez, the Democratic candidate, in 2022 (after East SGV was redistricted into CA-38). The second graph visualizes two linear regressions for votes for Sánchez in the 2018 and 2022 Congressional elections to compare the impact of redistricting and increase in Asian voters in CA-38. When juxtaposed, we can see that the difference in votes for Sánchez in 2022 versus 2018 and 2020, before the uptick in the number of Asians in CA-38. In 2022, with the presence of an Asian Republican candidate, the proportion of votes for Sánchez decreased, despite being an incumbent candidate. Because the other areas of CA-38 pre- and post-redistricting are kept relatively consistent, we can more comfortably attribute this shift in votes to the increase in Asian voters, who are usually a pretty consistent blue voting bloc.

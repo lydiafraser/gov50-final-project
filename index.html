@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["article.html","housing_data.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["article.html","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","tract.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1525,18 +1525,110 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
-<span><span class='va'>housing</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"housing_data.csv"</span><span class='op'>)</span></span></code></pre>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <h2 id="project-proposal">Project Proposal</h2>
-<p>My research question would be related to the connection between housing affordability in Boston’s Chinatown and looking at a certain factor (that I will hopefully determine after a deeper analysis of my topic) to see its relationship to housing prices in Boston’s Chinatown.
-It is the Housing Affordability Data System which categorizes housing units by affordability and households by income to allow analysts to observe affordability measures. I will filter the data to the specific area of Boston I want to look at. I want to use this data to more closely investigate the impact of gentrification and the driving factors of rising housing prices in Chinatown.
-I hypothesize that there will be some correlation between the timelines of the construction of infrastructure like the Tufts Medical Center and decrease in housing affordability in Chinatown.</p>
+<p>My research question is analyzing Asian voting behavior by looking at a specific suburban enclave in Los Angeles. I want to analyze the relationship between being Asian and voting based on descriptive representation versus partisan representation. Despite being a typically blue demographic, there have been several elections in which a Republican Asian candidate has won. My question is ultimately what the demographic shifts in the San Gabriel Valley from the last round of redistricting can reveal about Asian voting behavior through the most recent elections in 2022. My hypothesis is that Asians voters generally value descriptive representation over partisan representation when these identities come into conflict. I will do this by comparing census and election data from 2020 and 2022 from California District 38 (before and after redistricting and East San Gabriel Valley, a predominantly Asian area, was redistricted to CA-38). My variables of interest are votes cast for a given candidate in a particular election (either congressional or presidential). I will do multiple regressions to visualize and compare these votes.</p>
 <h2 id="milestone-3">Milestone 3</h2>
-<p>** I have loaded my data, but I am having issues figuring out how to reformat the data so that there are more than one column (right now, all of the columns are combined into one). I will seek help to resolve this issue, and once it is resolved, my data visualization should have no issues.</p>
-<p>burden_plot &lt;- ggplot(housing, mapping = aes(x = burden)) + geom_bar()
-burden_plot</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>votes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"tract.csv"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngdem22</span> <span class='op'>&lt;-</span> <span class='va'>votes</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cd_2020</span> <span class='op'>==</span> <span class='st'>"38"</span><span class='op'>)</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_22</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem22</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = CNGDEM01_22 ~ pop, data = cngdem22)
+
+Coefficients:
+(Intercept)          pop  
+    42.4400       0.1254  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem22</span></span></code></pre>
+</div>
+<pre><code># A tibble: 152 × 251
+   GEOID STATEFP COUNTYFP TRACTCE  NAME cd_2010 cd_2020 NAMELSAD MTFCC
+   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;
+ 1 0603… 06      037       409100 4091       39      38 Census … G5020
+ 2 0603… 06      037       530007 5300.      38      38 Census … G5020
+ 3 0603… 06      037       502700 5027       38      38 Census … G5020
+ 4 0603… 06      037       502901 5029.      38      38 Census … G5020
+ 5 0603… 06      037       502604 5026.      38      38 Census … G5020
+ 6 0603… 06      037       408707 4087.      39      38 Census … G5020
+ 7 0603… 06      037       502303 5023.      38      38 Census … G5020
+ 8 0603… 06      037       408503 4085.      39      38 Census … G5020
+ 9 0603… 06      037       403328 4033.      39      38 Census … G5020
+10 0603… 06      037       501301 5013.      38      38 Census … G5020
+# ℹ 142 more rows
+# ℹ 242 more variables: FUNCSTAT &lt;chr&gt;, ALAND &lt;dbl&gt;, AWATER &lt;dbl&gt;,
+#   INTPTLAT &lt;dbl&gt;, INTPTLON &lt;dbl&gt;, pop &lt;dbl&gt;, pop_white &lt;dbl&gt;,
+#   pop_black &lt;dbl&gt;, pop_hisp &lt;dbl&gt;, pop_aian &lt;dbl&gt;, pop_asian &lt;dbl&gt;,
+#   pop_nhpi &lt;dbl&gt;, pop_other &lt;dbl&gt;, pop_two &lt;dbl&gt;, vap &lt;dbl&gt;,
+#   vap_white &lt;dbl&gt;, vap_black &lt;dbl&gt;, vap_hisp &lt;dbl&gt;, vap_aian &lt;dbl&gt;,
+#   vap_asian &lt;dbl&gt;, vap_nhpi &lt;dbl&gt;, vap_other &lt;dbl&gt;, …</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem22_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngdem22</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span>, y <span class='op'>=</span> <span class='va'>CNGDEM01_22</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2500</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, title <span class='op'>=</span> <span class='st'>"2022 Congressional Votes for Linda Sánchez Regression"</span><span class='op'>)</span></span>
+<span><span class='va'>cngdem22_plot</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem1820</span> <span class='op'>&lt;-</span> <span class='va'>votes</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cd_2010</span> <span class='op'>==</span> <span class='st'>"38"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_18</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem1820</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = CNGDEM01_18 ~ pop, data = cngdem1820)
+
+Coefficients:
+(Intercept)          pop  
+    23.1620       0.1916  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_20</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem1820</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = CNGDEM01_20 ~ pop, data = cngdem1820)
+
+Coefficients:
+(Intercept)          pop  
+    18.0062       0.2652  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem1820</span></span></code></pre>
+</div>
+<pre><code># A tibble: 152 × 251
+   GEOID STATEFP COUNTYFP TRACTCE  NAME cd_2010 cd_2020 NAMELSAD MTFCC
+   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;
+ 1 0603… 06      037       530007 5300.      38      38 Census … G5020
+ 2 0603… 06      037       502700 5027       38      38 Census … G5020
+ 3 0603… 06      037       502901 5029.      38      38 Census … G5020
+ 4 0603… 06      037       502604 5026.      38      38 Census … G5020
+ 5 0603… 06      037       502303 5023.      38      38 Census … G5020
+ 6 0603… 06      037       554511 5545.      38      45 Census … G5020
+ 7 0603… 06      037       501301 5013.      38      38 Census … G5020
+ 8 0603… 06      037       980036 9800.      38      38 Census … G5020
+ 9 0603… 06      037       532102 5321.      38      38 Census … G5020
+10 0603… 06      037       502603 5026.      38      38 Census … G5020
+# ℹ 142 more rows
+# ℹ 242 more variables: FUNCSTAT &lt;chr&gt;, ALAND &lt;dbl&gt;, AWATER &lt;dbl&gt;,
+#   INTPTLAT &lt;dbl&gt;, INTPTLON &lt;dbl&gt;, pop &lt;dbl&gt;, pop_white &lt;dbl&gt;,
+#   pop_black &lt;dbl&gt;, pop_hisp &lt;dbl&gt;, pop_aian &lt;dbl&gt;, pop_asian &lt;dbl&gt;,
+#   pop_nhpi &lt;dbl&gt;, pop_other &lt;dbl&gt;, pop_two &lt;dbl&gt;, vap &lt;dbl&gt;,
+#   vap_white &lt;dbl&gt;, vap_black &lt;dbl&gt;, vap_hisp &lt;dbl&gt;, vap_aian &lt;dbl&gt;,
+#   vap_asian &lt;dbl&gt;, vap_nhpi &lt;dbl&gt;, vap_other &lt;dbl&gt;, …</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem1820_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngdem1820</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span>, color <span class='op'>=</span> <span class='st'>"2018"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span>, color <span class='op'>=</span> <span class='st'>"2020"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, title <span class='op'>=</span> <span class='st'>"2018 vs. 2020 Congressional Votes for Linda Sánchez Regression"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"CNG Election"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span> <span class='op'>=</span> <span class='st'>"blue"</span>, <span class='st'>"2020"</span> <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span>, <span class='st'>"2020"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>cngdem1820_plot</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<p>The two plots are meant to demonstrate/confirm my preliminary observations about Asian voting behavior. The first graph visualizes a linear regression for votes for Linda Sánchez, the Democratic candidate, in 2022 (after East SGV was redistricted into CA-38). The second graph visualizes two linear regressions for votes for Sánchez in the 2018 and 2022 Congressional elections to compare the impact of redistricting and increase in Asian voters in CA-38. When juxtaposed, we can see that the difference in votes for Sánchez in 2022 versus 2018 and 2020, before the uptick in the number of Asians in CA-38. In 2022, with the presence of an Asian Republican candidate, the proportion of votes for Sánchez decreased, despite being an incumbent candidate. Because the other areas of CA-38 pre- and post-redistricting are kept relatively consistent, we can more comfortably attribute this shift in votes to the increase in Asian voters, who are usually a pretty consistent blue voting bloc.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
