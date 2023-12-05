@@ -49,4 +49,5 @@ cngdem1820_plot
 ```
 
 
+
 The two plots are meant to demonstrate/confirm my preliminary observations about Asian voting behavior. The first graph visualizes a linear regression for votes for Linda Sánchez, the Democratic candidate, in 2022 (after East SGV was redistricted into CA-38). The second graph visualizes two linear regressions for votes for Sánchez in the 2018 and 2022 Congressional elections to compare the impact of redistricting and increase in Asian voters in CA-38. When juxtaposed, we can see that the difference in votes for Sánchez in 2022 versus 2018 and 2020, before the uptick in the number of Asians in CA-38. In 2022, with the presence of an Asian Republican candidate, the proportion of votes for Sánchez decreased, despite being an incumbent candidate. Because the other areas of CA-38 pre- and post-redistricting are kept relatively consistent, we can more comfortably attribute this shift in votes to the increase in Asian voters, who are usually a pretty consistent blue voting bloc.
