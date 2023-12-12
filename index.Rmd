@@ -1,53 +1,229 @@
 ---
-title: "Gov 50 Final Project"
+title: "Studying Asian Voting Patterns in CA-38"
 author: "Lydia Fraser"
-description: "My final project"
+description: "GOV 50 Final Project"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
+<details><summary>Show code</summary>
 
-
-## Project thoughts
-
-I am interested in exploring data related to Chinatown-preferably Boston's Chinatown but am also open to doing research into one based in another city. I would also be interested in doing research on a suburban Asian enclave in the greater Los Angeles area of Southern California.
-
-```{r}
+```{r setup}
 knitr::opts_chunk$set(error = TRUE)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(broom)
+library(modelsummary)
+library(knitr)
+library(kableExtra)
 ```
 
-## Project Proposal
-My research question is analyzing Asian voting behavior by looking at a specific suburban enclave in Los Angeles. I want to analyze the relationship between being Asian and voting based on descriptive representation versus partisan representation. Despite being a typically blue demographic, there have been several elections in which a Republican Asian candidate has won. My question is ultimately what the demographic shifts in the San Gabriel Valley from the last round of redistricting can reveal about Asian voting behavior through the most recent elections in 2022. My hypothesis is that Asians voters generally value descriptive representation over partisan representation when these identities come into conflict. I will do this by comparing census and election data from 2020 and 2022 from California District 38 (before and after redistricting and East San Gabriel Valley, a predominantly Asian area, was redistricted to CA-38). My variables of interest are votes cast for a given candidate in a particular election (either congressional or presidential). I will do multiple regressions to visualize and compare these votes. 
+</details>
 
-## Milestone 3
+## Introduction
+
+My research question is ultimately what the demographic shifts in the San Gabriel Valley from the last round of redistricting can reveal about Asian voting behavior through the most recent elections in 2022. It analyzes Asian voting behavior by looking at a specific suburban enclave in Los Angeles. California District 38, which previously had a smaller proportion of Asian residents, now includes a region known as the East San Gabriel Valley, which holds a majority East and Southeast Asian population. Thus, I want to analyze the impact of this demogaphic shift and the relationship between being Asian and voting based on descriptive representation versus partisan representation. Despite being a typically blue demographic, there have been several elections in which a Republican Asian candidate has won. My hypothesis is that Asians voters generally value descriptive representation over partisan representation when these identities come into conflict. My research aims to understand this contradictory phenomenon by trying to study Asian voting patterns and behaviors, which ultimately reveal the priorities and values of Asian voters when casting ballots.
+
+## Data
+
+My data is taken from the California Statewide Database and is specifically filtered to the election data from the current California District 38, including the regions that were redrawn into CA-38, which is essentially the the aforementioned East SGV. The data was collected through voters' Statement of Vote and the Statement of Registration in conjunction with the geography files from all 58 counties for each election. The purpose of the statewide database is to have an established place with election data that can be compared overtime.
+
+Because my data is raw, there is no explicit treatment, control, or variable that was trying to be studied during data collection. However, in the context of my research, the key independent variables are the population and propotion of Asians in CA-38 and the key dependent variable are the number and proportion of votes casted for a particular candidate in a particular election. **add design type and treatment (demographic shift, basically)**
+
+## Results
+
+<details><summary>Show code</summary>
+
 ```{r}
 votes <- read_csv("tract.csv")
 
-cngdem22 <- votes |>
-  filter(cd_2020 == "38")
-  lm(CNGDEM01_22 ~ pop, data = cngdem22)
-cngdem22
-
-cngdem22_plot <- ggplot(cngdem22, mapping = aes(x = pop, y = CNGDEM01_22)) + geom_point() + geom_smooth(method = "lm") + scale_y_continuous(limits = c(0, 2500)) + labs(x = "Population", y = "Number of Votes", title = "2022 Congressional Votes for Linda Sánchez Regression")
-cngdem22_plot
-```
-
-```{r}
 cngdem1820 <- votes |>
   filter(cd_2010 == "38")
-lm(CNGDEM01_18 ~ pop, data = cngdem1820)
-lm(CNGDEM01_20 ~ pop, data = cngdem1820)
 cngdem1820
 
-cngdem1820_plot <- ggplot(cngdem1820, mapping = aes(x = pop)) + geom_point(aes(y = CNGDEM01_18, color = "2018")) + geom_smooth(aes(y = CNGDEM01_18), method = "lm", color = "blue") + geom_point(aes(y = CNGDEM01_20, color = "2020")) + geom_smooth(aes(y = CNGDEM01_20), method = "lm", color = "red")  + labs(x = "Population", y = "Number of Votes", title = "2018 vs. 2020 Congressional Votes for Linda Sánchez Regression") + scale_color_manual(name = "CNG Election", values = c("2018" = "blue", "2020" = "red"), labels = c("2018", "2020"))
+linda18_table <- lm(CNGDEM01_18 ~ pop, data = cngdem1820)
+linda20_table <- lm(CNGDEM01_20 ~ pop, data = cngdem1820)
+
+linda18_table |>
+  broom::tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3) |>
+  kable_styling() |>
+  add_header_above(c("Votes for Linda Sánchez in 2018 Regression Values" = 2))
+
+linda20_table |>
+  broom::tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3) |>
+  kable_styling() |>
+  add_header_above(c("Votes for Linda Sánchez in 2020 Regression Values" = 2))
+
+cngdem1820_plot <- ggplot(
+  cngdem1820, mapping = aes(x = pop)) + geom_point(aes(y = CNGDEM01_18, color = "2018")) + geom_smooth(aes(y = CNGDEM01_18), method = "lm", color = "purple") + geom_point(aes(y = CNGDEM01_20, color = "2020")) + geom_smooth(aes(y = CNGDEM01_20), method = "lm", color = "green")  + labs(
+    x = "Population", y = "Number of Votes", 
+    title = "Fig. 1. 2018 vs. 2020 Congressional Votes for Linda Sánchez Regression"
+    ) + scale_color_manual(name = "CNG Election", values = c("2018" = "purple", "2020" = "green"), labels = c("2018", "2020")
+)
+```
+
+</details>
+
+```{r, echo=FALSE}
 cngdem1820_plot
 ```
 
+This graph displays votes cast for Linda Sánchez in the 2018 and 2020 congressional elections before East SGV was redistricted into CA-38. This establishes the voting precedent in CA-38 before redistricting and can be compared to Figure 2 to observe the shift in voting patterns after the demographic shift in CA-38.
 
+<details><summary>Show code</summary>
+
+```{r}
+cngdem22 <- votes |>
+  filter(cd_2020 == "38")
+cngdem22
+ 
+linda22_table <- lm(CNGDEM01_22 ~ pop, data = cngdem22)
+
+linda22_table |>
+  broom::tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3) |>
+  kable_styling() |>
+  add_header_above(c("Votes for Linda Sánchez in 2022 Regression Values" = 2))
+
+cngdem22_plot <- ggplot(cngdem22, mapping = aes(x = pop, y = CNGDEM01_22)) + geom_point() + geom_smooth(method = "lm") + scale_y_continuous(limits = c(0, 2500)) + labs(
+  x = "Population", y = "Number of Votes", 
+  title = "Fig. 2. 2022 Congressional Votes for Linda Sánchez Regression"
+  )
+```
+
+</details>
+
+```{r, echo=FALSE}
+cngdem22_plot
+```
+
+This graph displays votes cast for Linda Sánchez in the 2022 CA-38 congressional election to illustrate changes in established voting patterns in CA-38 post-redistricting. This data includes the entirety of CA-38 to reflect the aggregate impact of East SGV on the new district when compared to Figure 1, which displays the regressions of votes for Linda Sánchez pre-redistricting and before the increase in the Asian population in CA-38.
 
 The two plots are meant to demonstrate/confirm my preliminary observations about Asian voting behavior. The first graph visualizes a linear regression for votes for Linda Sánchez, the Democratic candidate, in 2022 (after East SGV was redistricted into CA-38). The second graph visualizes two linear regressions for votes for Sánchez in the 2018 and 2022 Congressional elections to compare the impact of redistricting and increase in Asian voters in CA-38. When juxtaposed, we can see that the difference in votes for Sánchez in 2022 versus 2018 and 2020, before the uptick in the number of Asians in CA-38. In 2022, with the presence of an Asian Republican candidate, the proportion of votes for Sánchez decreased, despite being an incumbent candidate. Because the other areas of CA-38 pre- and post-redistricting are kept relatively consistent, we can more comfortably attribute this shift in votes to the increase in Asian voters, who are usually a pretty consistent blue voting bloc.
+
+<details><summary>Show code</summary>
+
+```{r}
+cngprop20 <- votes |>
+  filter(cd_2010 == "38") |>
+  mutate(prop_asians = (pop_asian / pop) * 100) |>
+  mutate(prop_dem20 = (CNGDEM01_20 / TOTVOTE_20) * 100) |>
+  mutate(prop_rep20 = (CNGREP01_20 / TOTVOTE_20) * 100)
+cngprop20
+
+cngdem20_table <- lm(prop_dem20 ~ prop_asians, data = cngprop20)
+cngrep20_table <- lm(prop_rep20 ~ prop_asians, data = cngprop20)
+
+cngdem20_table |>
+  broom::tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3) |>
+  kable_styling() |>
+  add_header_above(c("Democrat Regression Values" = 2))
+
+cngrep20_table |>
+  broom::tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3) |>
+  kable_styling() |>
+  add_header_above(c("Republican Regression Values" = 2))
+
+cngprop20_plot <- ggplot(
+  cngprop20, mapping = aes(x = prop_asians)) + geom_point(aes(y = prop_dem20, color = "Democratic Votes")) + geom_smooth(aes(y = prop_dem20), method = "lm", color = "blue") + geom_point(aes(y = prop_rep20, color = "Republican Votes")) + geom_smooth(aes(y = prop_rep20), method = "lm", color = "red")  + scale_y_continuous(limits = c(0, 80)) + scale_x_continuous(limits = c(0, 80)) + labs(
+    x = "Proportion of Asians as a Percentage", y = "Proportion of Votes as a Percentage",
+    title = "Fig. 3. 2020 Congressional Election and Proportion of Asians in CA-38 Regression (Pre-Redistricting)",
+ ) + scale_color_manual(name = "Proportion of Party Votes", values = c("Democratic Votes" = "blue", "Republican Votes" = "red"), labels = c("Democratic Votes", "Republican Votes")
+)
+```
+
+</details>
+
+```{r, echo=FALSE}
+cngprop20_plot
+```
+
+This regression displays the relationship between the proportion of Asians in CA-38 and the proportion of votes received by a party in the 2020 congressional election before East SGV was redistricted into CA-38 and the district experienced a large uptick in their proportion of Asian voters. The proportion of Asians as a percentage was calculated by dividing the number of Asians in a geographic area by its total population and then multiplied by 100. The proportion of votes was calculated by dividing the number of votes casted for a certain party by the total number of votes and then multiplied by 100.
+
+<details><summary>Show code</summary>
+
+```{r}
+cngprop22 <- votes |>
+  filter(cd_2020 == "38") |>
+  mutate(prop_asians = (pop_asian / pop) * 100) |>
+  mutate(prop_dem22 = (CNGDEM01_22 / TOTVOTE_22) * 100) |>
+  mutate(prop_rep22 = (CNGREP01_22 / TOTVOTE_22) * 100)
+cngprop22
+
+cngdem22_table <- lm(prop_dem22 ~ prop_asians, data = cngprop22)
+cngrep22_table <- lm(prop_rep22 ~ prop_asians, data = cngprop22)
+
+summary_cngdem22 <- summary(cngdem22_table)
+intercept_p_value <- summary_cngdem22$coefficients["(Intercept)", "Pr(>|t|)"]
+coefficients_p_values <- summary_cngdem22$coefficients[, "Pr(>|t|)"]
+cat("Intercept p-value:", intercept_p_value, "\n")
+cat("Coefficients p-values:\n")
+print(coefficients_p_values)
+
+cngdem22_table |>
+  broom::tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3) |>
+  kable_styling() |>
+  add_header_above(c("Democrat Regression Values" = 2))
+
+cngrep22_table |>
+  broom::tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3) |>
+  kable_styling() |>
+  add_header_above(c("Republican Regression Values" = 2))
+
+cngprop22_plot <- ggplot(cngprop22, mapping = aes(x = prop_asians)) + geom_point(aes(y = prop_dem22, color = "Democratic Votes")) + geom_smooth(aes(y = prop_dem22), method = "lm", color = "blue") + geom_point(aes(y = prop_rep22, color = "Republican Votes")) + geom_smooth(aes(y = prop_rep22), method = "lm", color = "red")  + labs(
+  x = "Proportion of Asians as a Percentage", y = "Proportion of Votes as a Percentage", 
+  title = "Fig. 4. 2022 Congressional Election and Proportion of Asians in CA-38 Regression (Post-Redistricting)"
+  ) +  scale_color_manual(name = "Proportion of Party Votes", values = c("Democratic Votes" = "blue", "Republican Votes" = "red"), labels = c("Democratic Votes", "Republican Votes"))
+
+```
+
+</details>
+
+```{r, echo=FALSE}
+cngprop22_plot
+```
+
+This regression displays the relationship between the proportion of Asians in CA-38 and the proportion of votes received by a party in the 2022 congressional election, after East SGV was redistricted into CA-38, in which Republican Eric Ching ran against Democratic incumbent Linda Sánchez.
+
+results:
+
+**main coefficient, statistical significance of estimated coefficient, causal?**
+
+Main coefficients of interest: -0.3007 for proportion of Democratic votes in 2022 (negative)
+
+0.2953 for proportion of Republican votes in 2022 (positive)
+
+how to calculate statistical significance?
+
+i don't think it's causal
+
+The last two figures are linear regressions displaying the relationship between the proportion of Asians in CA-38 and the proportion of votes cast for a given party (either Democrat or Republican) in congressional elections pre- and post-redistricting. Figure 3 illustrates this relationship in the 2020 congressional election between Linda Sánchez and Michael Tolar, both non-Asian Democrats. Here, as the proportion of Asian voters increases, the proportion of votes for both Democrats and Republicans decrease minimally. There is no evident contrast in the number of votes cast for one party versus another.
+
+However, when compared to Figure 4, which displays a regression of the results of the 2022 congressional election between Linda Sánchez and Eric Ching, an Asian Republican, the slopes for the proportion of votes cast to each party steepen. This regression demonstrates evidence of higher crossover voting in the 2022 CA-38 congressional election compared to the 2020 congressional election in which there was no Asian candidate present. Here, when the proportion of Asians inreases, the proportion of votes for the Democratic candidate (Linda Sánchez) decreases while the proportion of votes for the Republican candidate (Eric Ching) increases. The regressions in Figure 3 show a weaker relationship between the proportion of Asians in a given area versus the proportion of votes given to a certain party compared to the regressions in Figure 4. This comparison indicates that Asian populations generally do not have strong associations with Republicans but in elections where the Republican candidate holds an Asian identity, that association may strengthen.
+
+## Conclusion
+
+need:
+
+-   plot visualizing main outcome of interest?
+
+-   plot of main analysis?
+
+-   which one is my main coefficient of interest?
+
+-   how to figure out if it is statistically significant? how to interpret causally?
