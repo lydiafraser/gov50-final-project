@@ -1537,11 +1537,10 @@ Show code
 </div>
 </details>
 <h2 id="introduction">Introduction</h2>
-<p>My research question is ultimately what the demographic shifts in the San Gabriel Valley from the last round of redistricting can reveal about Asian voting behavior through the most recent elections in 2022. It analyzes Asian voting behavior by looking at a specific suburban enclave in Los Angeles. California District 38, which previously had a smaller proportion of Asian residents, now includes a region known as the East San Gabriel Valley, which holds a majority East and Southeast Asian population. Thus, I want to analyze this demogaphic shift and what it can show about the relationship between being Asian and voting based on descriptive representation versus partisan representation. Despite being a typically blue demographic, there have been several elections in which a Republican Asian candidate has won. My hypothesis is that Asians voters generally value descriptive representation over partisan representation when these identities come into conflict. My research aims to understand this contradictory phenomenon by trying to study Asian voting patterns and behaviors, which ultimately reveal the priorities and values of Asian voters when casting ballots.</p>
+<p>What can the demographic shifts in the San Gabriel Valley from the last round of redistricting reveal about Asian voting behavior through the most recent elections in 2022? This study analyzes Asian voting behavior by looking at a specific suburban enclave in Los Angeles. California District 38, which previously had a smaller proportion of Asian residents, now includes a region known as the East San Gabriel Valley, which holds a majority East and Southeast Asian population. Thus, I want to analyze this demogaphic shift and what it can show about the relationship between being Asian and voting based on descriptive representation versus partisan representation. Despite being a typically blue demographic, there have been several elections in which a Republican Asian candidate has won. My hypothesis is that Asians voters generally value descriptive representation over partisan representation when these identities come into conflict. My research aims to understand this contradictory phenomenon by trying to study Asian voting patterns and behaviors, which ultimately reveal the priorities and values of Asian voters when casting ballots.</p>
 <h2 id="data">Data</h2>
 <p>My data is taken from the California Statewide Database and is specifically filtered to the election data from the current California District 38, including the regions that were redrawn into CA-38, which is essentially the the aforementioned East SGV. The data was collected through voters’ Statement of Vote and the Statement of Registration in conjunction with the geography files from all 58 counties for each election. The purpose of the statewide database is to have an established place with election data that can be compared overtime.</p>
-<p>Because my data is raw, there is no explicit treatment, control, or variable that was trying to be studied during data collection. However, in the context of my research, the key independent variables are the population and propotion of Asians in CA-38 and the key dependent variable are the number and proportion of votes casted for a particular candidate in a particular election. <strong>add design type and treatment (demographic shift, basically)</strong></p>
-<h2 id="results">Results</h2>
+<p>Because my data is raw, there is no explicit treatment, control, or variable that was trying to be studied during data collection. However, in the context of my research, the key independent variables are the population and propotion of Asians in CA-38 and the key dependent variable are the number and proportion of votes casted for a particular candidate in a particular election. In this case, the design type would be a before and after, because I am observing election data in CA-38 before and after the last redistricting process. In 2022, the proportion of votes given to Linda Sánchez was significantly lower than in 2020 or 2018, as demonstrated by Figures 1 and 2.</p>
 <details>
 <summary>
 Show code
@@ -1578,17 +1577,20 @@ Show code
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>linda18_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_18</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem1820</span><span class='op'>)</span></span>
 <span><span class='va'>linda20_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_20</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem1820</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>linda18_table</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Votes for Linda Sánchez in 2018 Regression Values"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>cngdem1820_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span></span>
+<span>  <span class='va'>cngdem1820</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span>, color <span class='op'>=</span> <span class='st'>"2018"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"purple"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span>, color <span class='op'>=</span> <span class='st'>"2020"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, </span>
+<span>    title <span class='op'>=</span> <span class='st'>"Fig. 1. 2018 vs. 2020 Congressional Votes for Linda Sánchez Regression"</span></span>
+<span>    <span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"CNG Election"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span> <span class='op'>=</span> <span class='st'>"purple"</span>, <span class='st'>"2020"</span> <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span>, <span class='st'>"2020"</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span></code></pre>
 </div>
+</div>
+</details>
+<div class="layout-chunk" data-layout="l-body">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Votes for Linda Sánchez in 2018 Regression Values
 </div>
@@ -1601,6 +1603,15 @@ term
 <th style="text-align:right;">
 estimate
 </th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1611,6 +1622,15 @@ estimate
 <td style="text-align:right;">
 23.162
 </td>
+<td style="text-align:right;">
+53.915
+</td>
+<td style="text-align:right;">
+0.430
+</td>
+<td style="text-align:right;">
+0.668
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1619,21 +1639,22 @@ pop
 <td style="text-align:right;">
 0.192
 </td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+16.949
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>linda20_table</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Votes for Linda Sánchez in 2020 Regression Values"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Votes for Linda Sánchez in 2020 Regression Values
 </div>
@@ -1646,6 +1667,15 @@ term
 <th style="text-align:right;">
 estimate
 </th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1656,6 +1686,15 @@ estimate
 <td style="text-align:right;">
 18.006
 </td>
+<td style="text-align:right;">
+60.760
+</td>
+<td style="text-align:right;">
+0.296
+</td>
+<td style="text-align:right;">
+0.767
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1664,20 +1703,18 @@ pop
 <td style="text-align:right;">
 0.265
 </td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+20.818
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem1820_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span></span>
-<span>  <span class='va'>cngdem1820</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span>, color <span class='op'>=</span> <span class='st'>"2018"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"purple"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span>, color <span class='op'>=</span> <span class='st'>"2020"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, </span>
-<span>    title <span class='op'>=</span> <span class='st'>"Fig. 1. 2018 vs. 2020 Congressional Votes for Linda Sánchez Regression"</span></span>
-<span>    <span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"CNG Election"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span> <span class='op'>=</span> <span class='st'>"purple"</span>, <span class='st'>"2020"</span> <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span>, <span class='st'>"2020"</span><span class='op'>)</span></span>
-<span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-</details>
-<div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
 <p>This graph displays votes cast for Linda Sánchez in the 2018 and 2020 congressional elections before East SGV was redistricted into CA-38. This establishes the voting precedent in CA-38 before redistricting and can be compared to Figure 2 to observe the shift in voting patterns after the demographic shift in CA-38.</p>
@@ -1714,17 +1751,18 @@ Show code
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>linda22_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_22</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem22</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>linda22_table</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Votes for Linda Sánchez in 2022 Regression Values"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>cngdem22_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngdem22</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span>, y <span class='op'>=</span> <span class='va'>CNGDEM01_22</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2500</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>  x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, </span>
+<span>  title <span class='op'>=</span> <span class='st'>"Fig. 2. 2022 Congressional Votes for Linda Sánchez Regression"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
 </div>
+</div>
+</details>
+<div class="layout-chunk" data-layout="l-body">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Votes for Linda Sánchez in 2022 Regression Values
 </div>
@@ -1737,6 +1775,15 @@ term
 <th style="text-align:right;">
 estimate
 </th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1747,6 +1794,15 @@ estimate
 <td style="text-align:right;">
 42.440
 </td>
+<td style="text-align:right;">
+41.210
+</td>
+<td style="text-align:right;">
+1.030
+</td>
+<td style="text-align:right;">
+0.305
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1755,22 +1811,23 @@ pop
 <td style="text-align:right;">
 0.125
 </td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+14.514
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem22_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngdem22</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span>, y <span class='op'>=</span> <span class='va'>CNGDEM01_22</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2500</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>  x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, </span>
-<span>  title <span class='op'>=</span> <span class='st'>"Fig. 2. 2022 Congressional Votes for Linda Sánchez Regression"</span></span>
-<span>  <span class='op'>)</span></span></code></pre>
-</div>
-</div>
-</details>
-<div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
 <p>This graph displays votes cast for Linda Sánchez in the 2022 CA-38 congressional election to illustrate changes in established voting patterns in CA-38 post-redistricting. This data includes the entirety of CA-38 to reflect the aggregate impact of East SGV on the new district when compared to Figure 1, which displays the regressions of votes for Linda Sánchez pre-redistricting and before the increase in the Asian population in CA-38.</p>
 <p>The two plots are meant to demonstrate/confirm my preliminary observations about Asian voting behavior. The first graph visualizes a linear regression for votes for Linda Sánchez, the Democratic candidate, in 2022 (after East SGV was redistricted into CA-38). The second graph visualizes two linear regressions for votes for Sánchez in the 2018 and 2022 Congressional elections to compare the impact of redistricting and increase in Asian voters in CA-38. When juxtaposed, we can see that the difference in votes for Sánchez in 2022 versus 2018 and 2020, before the uptick in the number of Asians in CA-38. In 2022, with the presence of an Asian Republican candidate, the proportion of votes for Sánchez decreased, despite being an incumbent candidate. Because the other areas of CA-38 pre- and post-redistricting are kept relatively consistent, we can more comfortably attribute this shift in votes to the increase in Asian voters, who are usually a pretty consistent blue voting bloc.</p>
+<h2 id="results">Results</h2>
 <details>
 <summary>
 Show code
@@ -1808,17 +1865,20 @@ Show code
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem20_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_dem20</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop20</span><span class='op'>)</span></span>
 <span><span class='va'>cngrep20_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_rep20</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop20</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>cngdem20_table</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democrat Regression Values"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>cngprop20_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span></span>
+<span>  <span class='va'>cngprop20</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_asians</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem20</span>, color <span class='op'>=</span> <span class='st'>"Democratic Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep20</span>, color <span class='op'>=</span> <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Proportion of Asians as a Percentage"</span>, y <span class='op'>=</span> <span class='st'>"Proportion of Votes as a Percentage"</span>,</span>
+<span>    title <span class='op'>=</span> <span class='st'>"Fig. 3. 2020 Congressional Election and Proportion of Asians in CA-38 Regression (Pre-Redistricting)"</span>,</span>
+<span> <span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Proportion of Party Votes"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span> <span class='op'>=</span> <span class='st'>"blue"</span>, <span class='st'>"Republican Votes"</span> <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span>, <span class='st'>"Republican Votes"</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span></code></pre>
 </div>
+</div>
+</details>
+<div class="layout-chunk" data-layout="l-body">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Democrat Regression Values
 </div>
@@ -1831,6 +1891,15 @@ term
 <th style="text-align:right;">
 estimate
 </th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1841,6 +1910,15 @@ estimate
 <td style="text-align:right;">
 62.563
 </td>
+<td style="text-align:right;">
+0.564
+</td>
+<td style="text-align:right;">
+110.900
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1849,21 +1927,22 @@ prop_asians
 <td style="text-align:right;">
 -0.166
 </td>
+<td style="text-align:right;">
+0.025
+</td>
+<td style="text-align:right;">
+-6.746
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngrep20_table</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Republican Regression Values"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Republican Regression Values
 </div>
@@ -1876,6 +1955,15 @@ term
 <th style="text-align:right;">
 estimate
 </th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1886,6 +1974,15 @@ estimate
 <td style="text-align:right;">
 0.396
 </td>
+<td style="text-align:right;">
+0.180
+</td>
+<td style="text-align:right;">
+2.204
+</td>
+<td style="text-align:right;">
+0.029
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1894,20 +1991,18 @@ prop_asians
 <td style="text-align:right;">
 -0.002
 </td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-0.284
+</td>
+<td style="text-align:right;">
+0.777
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngprop20_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span></span>
-<span>  <span class='va'>cngprop20</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_asians</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem20</span>, color <span class='op'>=</span> <span class='st'>"Democratic Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep20</span>, color <span class='op'>=</span> <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    x <span class='op'>=</span> <span class='st'>"Proportion of Asians as a Percentage"</span>, y <span class='op'>=</span> <span class='st'>"Proportion of Votes as a Percentage"</span>,</span>
-<span>    title <span class='op'>=</span> <span class='st'>"Fig. 3. 2020 Congressional Election and Proportion of Asians in CA-38 Regression (Pre-Redistricting)"</span>,</span>
-<span> <span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Proportion of Party Votes"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span> <span class='op'>=</span> <span class='st'>"blue"</span>, <span class='st'>"Republican Votes"</span> <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span>, <span class='st'>"Republican Votes"</span><span class='op'>)</span></span>
-<span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-</details>
-<div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
 <p>This regression displays the relationship between the proportion of Asians in CA-38 and the proportion of votes received by a party in the 2020 congressional election before East SGV was redistricted into CA-38 and the district experienced a large uptick in their proportion of Asian voters. The proportion of Asians as a percentage was calculated by dividing the number of Asians in a geographic area by its total population and then multiplied by 100. The proportion of votes was calculated by dividing the number of votes casted for a certain party by the total number of votes and then multiplied by 100.</p>
@@ -1948,33 +2043,18 @@ Show code
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem22_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_dem22</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop22</span><span class='op'>)</span></span>
 <span><span class='va'>cngrep22_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_rep22</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop22</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>summary_cngdem22</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>cngdem22_table</span><span class='op'>)</span></span>
-<span><span class='va'>intercept_p_value</span> <span class='op'>&lt;-</span> <span class='va'>summary_cngdem22</span><span class='op'>$</span><span class='va'>coefficients</span><span class='op'>[</span><span class='st'>"(Intercept)"</span>, <span class='st'>"Pr(&gt;|t|)"</span><span class='op'>]</span></span>
-<span><span class='va'>coefficients_p_values</span> <span class='op'>&lt;-</span> <span class='va'>summary_cngdem22</span><span class='op'>$</span><span class='va'>coefficients</span><span class='op'>[</span>, <span class='st'>"Pr(&gt;|t|)"</span><span class='op'>]</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Intercept p-value:"</span>, <span class='va'>intercept_p_value</span>, <span class='st'>"\n"</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>cngprop22_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngprop22</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_asians</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem22</span>, color <span class='op'>=</span> <span class='st'>"Democratic Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem22</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep22</span>, color <span class='op'>=</span> <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep22</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>  x <span class='op'>=</span> <span class='st'>"Proportion of Asians as a Percentage"</span>, y <span class='op'>=</span> <span class='st'>"Proportion of Votes as a Percentage"</span>, </span>
+<span>  title <span class='op'>=</span> <span class='st'>"Fig. 4. 2022 Congressional Election and Proportion of Asians in CA-38 Regression (Post-Redistricting)"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Proportion of Party Votes"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span> <span class='op'>=</span> <span class='st'>"blue"</span>, <span class='st'>"Republican Votes"</span> <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span>, <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>Intercept p-value: 3.771399e-123 </code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Coefficients p-values:\n"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>Coefficients p-values:</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>coefficients_p_values</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>  (Intercept)   prop_asians 
-3.771399e-123  1.175740e-22 </code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngdem22_table</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democrat Regression Values"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
+</details>
+<div class="layout-chunk" data-layout="l-body">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Democrat Regression Values
 </div>
@@ -1987,6 +2067,15 @@ term
 <th style="text-align:right;">
 estimate
 </th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1997,6 +2086,15 @@ estimate
 <td style="text-align:right;">
 65.089
 </td>
+<td style="text-align:right;">
+0.837
+</td>
+<td style="text-align:right;">
+77.805
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -2005,21 +2103,22 @@ prop_asians
 <td style="text-align:right;">
 -0.301
 </td>
+<td style="text-align:right;">
+0.026
+</td>
+<td style="text-align:right;">
+-11.617
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngrep22_table</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Republican Regression Values"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Republican Regression Values
 </div>
@@ -2032,6 +2131,15 @@ term
 <th style="text-align:right;">
 estimate
 </th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
@@ -2042,6 +2150,15 @@ estimate
 <td style="text-align:right;">
 31.155
 </td>
+<td style="text-align:right;">
+0.876
+</td>
+<td style="text-align:right;">
+35.559
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -2050,38 +2167,150 @@ prop_asians
 <td style="text-align:right;">
 0.295
 </td>
+<td style="text-align:right;">
+0.027
+</td>
+<td style="text-align:right;">
+10.896
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>cngprop22_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngprop22</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_asians</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem22</span>, color <span class='op'>=</span> <span class='st'>"Democratic Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem22</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep22</span>, color <span class='op'>=</span> <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep22</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>  x <span class='op'>=</span> <span class='st'>"Proportion of Asians as a Percentage"</span>, y <span class='op'>=</span> <span class='st'>"Proportion of Votes as a Percentage"</span>, </span>
-<span>  title <span class='op'>=</span> <span class='st'>"Fig. 4. 2022 Congressional Election and Proportion of Asians in CA-38 Regression (Post-Redistricting)"</span></span>
-<span>  <span class='op'>)</span> <span class='op'>+</span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Proportion of Party Votes"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span> <span class='op'>=</span> <span class='st'>"blue"</span>, <span class='st'>"Republican Votes"</span> <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span>, <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-</details>
-<div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
 <p>This regression displays the relationship between the proportion of Asians in CA-38 and the proportion of votes received by a party in the 2022 congressional election, after East SGV was redistricted into CA-38, in which Republican Eric Ching ran against Democratic incumbent Linda Sánchez.</p>
-<p>results:</p>
-<p><strong>main coefficient, statistical significance of estimated coefficient, causal?</strong></p>
-<p>Main coefficients of interest: -0.3007 for proportion of Democratic votes in 2022 (negative)</p>
-<p>0.2953 for proportion of Republican votes in 2022 (positive)</p>
-<p>how to calculate statistical significance?</p>
-<p>i don’t think it’s causal</p>
-<p>The last two figures are linear regressions displaying the relationship between the proportion of Asians in CA-38 and the proportion of votes cast for a given party (either Democrat or Republican) in congressional elections pre- and post-redistricting. Figure 3 illustrates this relationship in the 2020 congressional election between Linda Sánchez and Michael Tolar, both non-Asian Democrats. Here, as the proportion of Asian voters increases, the proportion of votes for both Democrats and Republicans decrease minimally. There is no evident contrast in the number of votes cast for one party versus another.</p>
+<p>The last two figures display the relationship between the proportion of Asians in CA-38 and the proportion of votes cast for a given party (either Democrat or Republican) in congressional elections pre- and post-redistricting. Figure 3 illustrates this relationship in the 2020 congressional election between Linda Sánchez and Michael Tolar, both non-Asian Democrats. Here, as the proportion of Asian voters increases, the proportion of votes for both Democrats and Republicans decrease minimally. There is no evident contrast in the number of votes cast for one party versus another.</p>
 <p>However, when compared to Figure 4, which displays a regression of the results of the 2022 congressional election between Linda Sánchez and Eric Ching, an Asian Republican, the slopes for the proportion of votes cast to each party steepen. This regression demonstrates evidence of higher crossover voting in the 2022 CA-38 congressional election compared to the 2020 congressional election in which there was no Asian candidate present. Here, when the proportion of Asians inreases, the proportion of votes for the Democratic candidate (Linda Sánchez) decreases while the proportion of votes for the Republican candidate (Eric Ching) increases. The regressions in Figure 3 show a weaker relationship between the proportion of Asians in a given area versus the proportion of votes given to a certain party compared to the regressions in Figure 4. This comparison indicates that Asian populations generally do not have strong associations with Republicans but in elections where the Republican candidate holds an Asian identity, that association may strengthen.</p>
+<p>My main coefficients of interest are -0.301 and 0.295. The former refers to the regression for proportion of votes cast for the Democratic Party in 2022. For every point increase in Asians, there were -0.301 less votes for the Democratic Party in the 2022 election where there was an Asian Republican candidate. The latter coefficient, 0.295 refers to the regression for proportion of votes cast for the Republican Party in 2022. For every point increase in Asians, there were 0.295 more votes for the Republican Party. With p-values of 0, both of these coefficients are statistically significant, so there is sufficient evidence to reject the null hypothesis. As observed through comparisons between the 2020 and 2022 congressional elections, when there was an Asian Republican candidate, Asian voters, despite typically voting Democrat, demonstrated crossover voting.</p>
+<p>However, because there are too many confounding factors that the election data cannot isolate, these results cannot be interpreted causally. Moreover, rather than attempting to observe the impact of a particular treatment, this study only attempts to reveal what would be an already existing behavioral phenomenon in in regards to Asian voters. This most recent round of redistricting simply provided the opportunity to isolate the East SGV as they were the primary change in the geographical shift in CA-38. With East SGV consisting of such a significant Asian population, by comparing CA-38 before and after redistricting, we can more clearly observe Asian voting patterns.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>need:</p>
-<ul>
-<li><p>plot visualizing main outcome of interest?</p></li>
-<li><p>plot of main analysis?</p></li>
-<li><p>which one is my main coefficient of interest?</p></li>
-<li><p>how to figure out if it is statistically significant? how to interpret causally?</p></li>
-</ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>My hypothesis is that Asian voters will prioritize descriptive representation over partisan representation when these identities come into conflict in an election. There is substantial support for this claim when observing the 2020 and 2022 congressional elections, but whether this statement can be generalized outside of this is yet to be studied. Additionally, because the Asian demographic in East SGV is primarily East and Southeast Asian, there is limited external validity to ethnicities outside of that. Like mentioned earlier, there are also many confounding factors such as the high concentration of Asians in East SGV. It is not extremely common for Asians to live in such high concentrations, so it would be possible that this proximity to one another could influence their perceptions of descriptive versus partisan identity. If I had more time/money, I would expand this study to ethnic enclaves that also have high concentrations of Asians. I would also do more inter-ethnic comparisons amongst Asians. This research aims to offer a larger understanding of Asian voting behavior and political values which often have limited comprehension.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>error <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modelsummary.com'>modelsummary</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://haozhu233.github.io/kableExtra/'>kableExtra</a></span><span class='op'>)</span></span>
+<span><span class='va'>votes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"tract.csv"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngdem1820</span> <span class='op'>&lt;-</span> <span class='va'>votes</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cd_2010</span> <span class='op'>==</span> <span class='st'>"38"</span><span class='op'>)</span></span>
+<span><span class='va'>cngdem1820</span></span>
+<span></span>
+<span><span class='va'>linda18_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_18</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem1820</span><span class='op'>)</span></span>
+<span><span class='va'>linda20_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_20</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem1820</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngdem1820_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span></span>
+<span>  <span class='va'>cngdem1820</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span>, color <span class='op'>=</span> <span class='st'>"2018"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_18</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"purple"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span>, color <span class='op'>=</span> <span class='st'>"2020"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>CNGDEM01_20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, </span>
+<span>    title <span class='op'>=</span> <span class='st'>"Fig. 1. 2018 vs. 2020 Congressional Votes for Linda Sánchez Regression"</span></span>
+<span>    <span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"CNG Election"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span> <span class='op'>=</span> <span class='st'>"purple"</span>, <span class='st'>"2020"</span> <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2018"</span>, <span class='st'>"2020"</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='va'>linda18_table</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span>, <span class='va'>std.error</span>, <span class='va'>statistic</span>, <span class='va'>p.value</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Votes for Linda Sánchez in 2018 Regression Values"</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>linda20_table</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span>, <span class='va'>std.error</span>, <span class='va'>statistic</span>, <span class='va'>p.value</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Votes for Linda Sánchez in 2020 Regression Values"</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngdem1820_plot</span></span>
+<span><span class='va'>cngdem22</span> <span class='op'>&lt;-</span> <span class='va'>votes</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cd_2020</span> <span class='op'>==</span> <span class='st'>"38"</span><span class='op'>)</span></span>
+<span><span class='va'>cngdem22</span></span>
+<span> </span>
+<span><span class='va'>linda22_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>CNGDEM01_22</span> <span class='op'>~</span> <span class='va'>pop</span>, data <span class='op'>=</span> <span class='va'>cngdem22</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngdem22_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngdem22</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>pop</span>, y <span class='op'>=</span> <span class='va'>CNGDEM01_22</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2500</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>  x <span class='op'>=</span> <span class='st'>"Population"</span>, y <span class='op'>=</span> <span class='st'>"Number of Votes"</span>, </span>
+<span>  title <span class='op'>=</span> <span class='st'>"Fig. 2. 2022 Congressional Votes for Linda Sánchez Regression"</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='va'>linda22_table</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span>, <span class='va'>std.error</span>, <span class='va'>statistic</span>, <span class='va'>p.value</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Votes for Linda Sánchez in 2022 Regression Values"</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngdem22_plot</span></span>
+<span><span class='va'>cngprop20</span> <span class='op'>&lt;-</span> <span class='va'>votes</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cd_2010</span> <span class='op'>==</span> <span class='st'>"38"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_asians <span class='op'>=</span> <span class='op'>(</span><span class='va'>pop_asian</span> <span class='op'>/</span> <span class='va'>pop</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>100</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_dem20 <span class='op'>=</span> <span class='op'>(</span><span class='va'>CNGDEM01_20</span> <span class='op'>/</span> <span class='va'>TOTVOTE_20</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>100</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_rep20 <span class='op'>=</span> <span class='op'>(</span><span class='va'>CNGREP01_20</span> <span class='op'>/</span> <span class='va'>TOTVOTE_20</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>100</span><span class='op'>)</span></span>
+<span><span class='va'>cngprop20</span></span>
+<span></span>
+<span><span class='va'>cngdem20_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_dem20</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop20</span><span class='op'>)</span></span>
+<span><span class='va'>cngrep20_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_rep20</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop20</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngprop20_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span></span>
+<span>  <span class='va'>cngprop20</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_asians</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem20</span>, color <span class='op'>=</span> <span class='st'>"Democratic Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep20</span>, color <span class='op'>=</span> <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep20</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Proportion of Asians as a Percentage"</span>, y <span class='op'>=</span> <span class='st'>"Proportion of Votes as a Percentage"</span>,</span>
+<span>    title <span class='op'>=</span> <span class='st'>"Fig. 3. 2020 Congressional Election and Proportion of Asians in CA-38 Regression (Pre-Redistricting)"</span>,</span>
+<span> <span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Proportion of Party Votes"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span> <span class='op'>=</span> <span class='st'>"blue"</span>, <span class='st'>"Republican Votes"</span> <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span>, <span class='st'>"Republican Votes"</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span>
+<span><span class='va'>cngdem20_table</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span>, <span class='va'>std.error</span>, <span class='va'>statistic</span>, <span class='va'>p.value</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democrat Regression Values"</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngrep20_table</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span>, <span class='va'>std.error</span>, <span class='va'>statistic</span>, <span class='va'>p.value</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Republican Regression Values"</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngprop20_plot</span></span>
+<span><span class='va'>cngprop22</span> <span class='op'>&lt;-</span> <span class='va'>votes</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cd_2020</span> <span class='op'>==</span> <span class='st'>"38"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_asians <span class='op'>=</span> <span class='op'>(</span><span class='va'>pop_asian</span> <span class='op'>/</span> <span class='va'>pop</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>100</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_dem22 <span class='op'>=</span> <span class='op'>(</span><span class='va'>CNGDEM01_22</span> <span class='op'>/</span> <span class='va'>TOTVOTE_22</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>100</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop_rep22 <span class='op'>=</span> <span class='op'>(</span><span class='va'>CNGREP01_22</span> <span class='op'>/</span> <span class='va'>TOTVOTE_22</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>100</span><span class='op'>)</span></span>
+<span><span class='va'>cngprop22</span></span>
+<span></span>
+<span><span class='va'>cngdem22_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_dem22</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop22</span><span class='op'>)</span></span>
+<span><span class='va'>cngrep22_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>prop_rep22</span> <span class='op'>~</span> <span class='va'>prop_asians</span>, data <span class='op'>=</span> <span class='va'>cngprop22</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngprop22_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>cngprop22</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>prop_asians</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem22</span>, color <span class='op'>=</span> <span class='st'>"Democratic Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_dem22</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep22</span>, color <span class='op'>=</span> <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>prop_rep22</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>  <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>  x <span class='op'>=</span> <span class='st'>"Proportion of Asians as a Percentage"</span>, y <span class='op'>=</span> <span class='st'>"Proportion of Votes as a Percentage"</span>, </span>
+<span>  title <span class='op'>=</span> <span class='st'>"Fig. 4. 2022 Congressional Election and Proportion of Asians in CA-38 Regression (Post-Redistricting)"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Proportion of Party Votes"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span> <span class='op'>=</span> <span class='st'>"blue"</span>, <span class='st'>"Republican Votes"</span> <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democratic Votes"</span>, <span class='st'>"Republican Votes"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='va'>cngdem22_table</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span>, <span class='va'>std.error</span>, <span class='va'>statistic</span>, <span class='va'>p.value</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democrat Regression Values"</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngrep22_table</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span>, <span class='va'>std.error</span>, <span class='va'>statistic</span>, <span class='va'>p.value</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Republican Regression Values"</span> <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>cngprop22_plot</span></span></code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
